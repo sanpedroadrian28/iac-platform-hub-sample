@@ -1,0 +1,1 @@
+ # customData — registers VM with Ansible/Puppet at boot
