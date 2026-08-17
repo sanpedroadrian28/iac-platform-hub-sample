@@ -1,7 +1,7 @@
 # VMSS + autoscaling
 resource "azurerm_linux_virtual_machine_scale_set" "nodeapp" {
   name                = "vmss-nodeapp-${var.env}"
-  resource_group_name = var.rg_name
+  resource_group_name = var.resource_group_name
   location            = var.location
   sku                 = "Standard_D2s_v5"
   instances           = var.instance_count       # 6 default
@@ -48,13 +48,17 @@ resource "azurerm_linux_virtual_machine_scale_set" "nodeapp" {
 
 resource "azurerm_monitor_autoscale_setting" "nodeapp" {
   name                = "autoscale-nodeapp"
-  resource_group_name = var.rg_name
+  resource_group_name = var.resource_group_name
   location            = var.location
   target_resource_id  = azurerm_linux_virtual_machine_scale_set.nodeapp.id
 
   profile {
     name = "default"
-    capacity { minimum = "6" maximum = "15" default = "6" }
+    capacity {
+      minimum = "6"
+      maximum = "15"
+      default = "6"
+    }
 
     rule {
       metric_trigger {
