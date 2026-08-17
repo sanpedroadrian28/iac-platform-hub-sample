@@ -1,0 +1,76 @@
+# -------------------------------
+# OS / Editor
+# -------------------------------
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.swp
+*.swo
+
+# -------------------------------
+# Logs
+# -------------------------------
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# -------------------------------
+# Node.js
+# -------------------------------
+node_modules/
+dist/
+build/
+coverage/
+.nyc_output/
+.env
+.env.*
+!.env.example
+
+# -------------------------------
+# Terraform / IaC
+# -------------------------------
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+terraform.tfvars
+*.auto.tfvars
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+
+# Terraform plan outputs
+*.tfplan
+plan.out
+
+# -------------------------------
+# Bicep / ARM build artifacts
+# -------------------------------
+*.bicepbuild.json
+*.json.tmp
+
+# -------------------------------
+# Shell / local execution artifacts
+# -------------------------------
+*.pid
+*.tmp
+*.temp
+
+# -------------------------------
+# Secrets / certificates
+# -------------------------------
+*.pem
+*.key
+*.pfx
+*.p12
+secrets.*
