@@ -1,0 +1,19 @@
+---
+version: 5
+
+defaults:
+  datadir: data
+  data_hash: yaml_data
+
+hierarchy:
+  # 1. Node-specific overrides (highest precedence, rarely used)
+  - name: "Node-specific data"
+    path: "nodes/%{trusted.certname}.yaml"
+
+  # 2. Per-environment overrides (dev/test/prod values)
+  - name: "Environment data"
+    path: "environment/%{server_facts.environment}.yaml"
+
+  # 3. Shared baseline — guarantees every environment has these keys defined
+  - name: "Common data"
+    path: "common.yaml"
