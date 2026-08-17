@@ -1,0 +1,17 @@
+---
+# Required keys — every environment MUST supply matching entries in its
+# environment/<env>.yaml. Enforced via nodeapp::config::required_keys assertion.
+nodeapp::config::required_keys:
+  - node_env
+  - port
+  - db_host
+  - db_name
+  - log_level
+  - session_secret_key_vault_ref
+  - feature_flag_new_checkout
+
+# Safe, environment-agnostic defaults
+nodeapp::config::port: 3000
+nodeapp::config::log_level: 'info'
+nodeapp::install::version: '1.4.2'
+nodeapp::monitoring::ama_enabled: true
