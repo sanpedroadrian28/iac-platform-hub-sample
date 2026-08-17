@@ -1,0 +1,65 @@
+# This is the scenario driver config and it defines what platform Molecule spins up to test the role, which provisioner (Ansible) applies it, and how verification runs.
+---
+dependency:
+  name: galaxy
+  options:
+    requirements-file: requirements.yml
+
+driver:
+  name: docker
+
+platforms:
+  - name: nodeapp-dev-instance
+    image: geerlingguy/docker-ubuntu2204-ansible:latest
+    pre_build_image: true
+    privileged: true
+    command: /lib/systemd/systemd
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    cgroupns_mode: host
+    groups:
+      - nodeapp_vmss
+    # Simulate the "dev" environment group_vars during test
+    vars:
+      node_env: development
+      db_host: dev-db.internal.company.com
+      db_name: nodeapp_dev
+      log_level: debug
+      session_secret_key_vault_ref: nodeapp-session-secret-dev
+      feature_flag_new_checkout: "true"
+
+provisioner:
+  name: ansible
+  playbooks:
+    converge: ../../playbooks/nodeapp.yml
+  inventory:
+    group_vars:
+      all:
+        nodeapp_port: 3000
+        nodeapp_log_level: info
+      nodeapp_vmss: {}
+  config_options:
+    defaults:
+      interpreter_python: auto_silent
+      callback_whitelist: profile_tasks, timer
+
+verifier:
+  name: ansible
+
+scenario:
+  name: default
+  test_sequence:
+    - dependency
+    - lint
+    - cleanup
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    - idempotence
+    - side_effect
+    - verify
+    - cleanup
+    - destroy
+    

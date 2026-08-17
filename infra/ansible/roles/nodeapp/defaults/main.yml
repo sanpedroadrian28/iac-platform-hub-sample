@@ -1,0 +1,2 @@
+# Safe fallback defaults — never used for anything security/environment sensitive
+feature_flag_new_checkout: "false"

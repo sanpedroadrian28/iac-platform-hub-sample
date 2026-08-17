@@ -1,0 +1,15 @@
+---
+- name: Verify Node.js config is complete in every environment
+  hosts: all
+  tasks:
+    - name: Read rendered .env file
+      ansible.builtin.slurp:
+        src: /opt/nodeapp/.env
+      register: env_file
+
+    - name: Assert every required key is present in rendered config
+      ansible.builtin.assert:
+        that:
+          - "item in (env_file.content | b64decode)"
+        fail_msg: "Missing required config key '{{ item }}' in rendered .env for {{ inventory_hostname }}"
+      loop: "{{ nodeapp_required_vars }}"

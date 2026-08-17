@@ -1,0 +1,24 @@
+---
+- name: Assert all required Node.js config variables are defined
+  ansible.builtin.assert:
+    that:
+      - lookup('vars', item.lower(), default=omit) is not none
+    fail_msg: "Required variable '{{ item }}' is not defined for this environment ({{ inventory_hostname }})"
+  loop: "{{ nodeapp_required_vars }}"
+  loop_control:
+    label: "{{ item }}"
+
+- name: Render Node.js .env configuration file
+  ansible.builtin.template:
+    src: nodeapp.env.j2
+    dest: /opt/nodeapp/.env
+    owner: nodeapp
+    group: nodeapp
+    mode: '0640'
+  notify: restart nodeapp
+
+- name: Ensure Node.js app service is running
+  ansible.builtin.systemd:
+    name: nodeapp
+    state: started
+    enabled: true
