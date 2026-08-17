@@ -1,0 +1,6 @@
+---
+- name: Configure Node.js application
+  hosts: nodeapp_vmss
+  become: true
+  roles:
+    - nodeapp

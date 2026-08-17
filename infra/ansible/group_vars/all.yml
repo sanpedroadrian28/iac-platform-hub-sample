@@ -1,0 +1,13 @@
+# Variables that MUST be defined in every environment.
+# Missing values here are intentionally left undefined so the
+# "assert required vars" task fails loudly instead of silently omitting them.
+nodeapp_required_vars:
+  - NODE_ENV
+  - PORT
+  - DB_HOST
+  - DB_NAME
+  - LOG_LEVEL
+  - SESSION_SECRET_KEY_VAULT_REF   # points to Key Vault secret name, not the value itself
+
+nodeapp_port: 3000
+nodeapp_log_level: "info"

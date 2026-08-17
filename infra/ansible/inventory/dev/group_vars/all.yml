@@ -1,0 +1,8 @@
+node_env: "development"
+db_host: "dev-db.internal.company.com"
+db_name: "nodeapp_dev"
+log_level: "debug"
+session_secret_key_vault_ref: "nodeapp-session-secret-dev"
+
+# This was the missing setting reported by the developer:
+feature_flag_new_checkout: "true"
